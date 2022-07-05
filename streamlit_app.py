@@ -19,7 +19,7 @@ my_fruit_list = my_fruit_list.set_index('Fruit')
 
 #Below is to show default and selected fruits into a variable fruits_selected and show only those which are in the selected list
 fruits_selected = streamlit.multiselect("Pick some fruits:", list(my_fruit_list.index),default=['Avocado','Strawberries'])
-fruits_toshow = fruits_list.loc[fruits_selected]
+fruits_toshow = my_fruit_list.loc[fruits_selected]
 #Display the table on the app with select fruits only
 #streamlit.dataframe(fruits_toshow)
 
