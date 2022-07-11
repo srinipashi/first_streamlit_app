@@ -23,7 +23,11 @@ fruits_toshow = my_fruit_list.loc[fruits_selected]
 #Display the table on the app with select fruits only
 streamlit.dataframe(fruits_toshow)
 
+## New Section to display Fruityvice api response
+streamlit.header('Fruityvice Fruit Advice!')
 
-
+import requests
+fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon")
+streamlit.text(fruityvice_response.json())                           
 
 
