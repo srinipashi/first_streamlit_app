@@ -25,9 +25,15 @@ streamlit.dataframe(fruits_toshow)
 
 ## New Section to display Fruityvice api response
 streamlit.header('Fruityvice Fruit Advice!')
+## Added to get User inputs on fruits choice
+fruit_choice = streamlit.text_input('What fruit would you like information about?','Kiwi')
+streamlit.write('The user entered: ',fruit_choice)
 
 import requests
-fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon")
+##fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon") ## This is default watermelon
+
+fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_choice) ## This is to list the user choice Fruit Details
+
 ## streamlit.text(fruityvice_response.json())   # just writes the data to the screen        ## removed to not to display raw Json                
 
 # use the pandas package to load the jason into Dataframes 
