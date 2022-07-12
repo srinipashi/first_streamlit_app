@@ -30,23 +30,41 @@ fruits_toshow = my_fruit_list.loc[fruits_selected]
 #Display the table on the app with select fruits only
 streamlit.dataframe(fruits_toshow)
 
-## New Section to display Fruityvice api response
-streamlit.header('Fruityvice Fruit Advice!')
-## Added to get User inputs on fruits choice
-fruit_choice = streamlit.text_input('What fruit would you like information about?','Kiwi')
-streamlit.write('The user entered: ',fruit_choice)
+## Original Block1
 
+  ### New Section to display Fruityvice api response
+  #streamlit.header('Fruityvice Fruit Advice!')
+  ### Added to get User inputs on fruits choice
+  #fruit_choice = streamlit.text_input('What fruit would you like information about?','Kiwi')
+  #streamlit.write('The user entered: ',fruit_choice)
+  ###fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon") ## This is default watermelon
+
+  #fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_choice) ## This is to list the user choice Fruit Details
+
+  ## streamlit.text(fruityvice_response.json())   # just writes the data to the screen        ## removed to not to display raw Json                
+
+  ## use the pandas package to load the jason into Dataframes 
+  #fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
+  ## Display the Dataframes
+  #streamlit.dataframe(fruityvice_normalized)
+
+## End of Original Block1
 ##import requests
-##fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon") ## This is default watermelon
+## Written the above Orginal block1 in structured manner below
+streamlit.header('Fruityvice Fruit Advice!')
+try:
+  fruit_choice = streamlit.text_input('What fruit would you like information about?')
+  if not fruit_choice:
+    streamlit.error("Please select a fruit to get information.")
+  else:
+    fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_choice)
+    fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
+    streamlit.dataframe(fruityvice_normalized)
+    
+except URLError as e:
+  streamlit.error()
 
-fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_choice) ## This is to list the user choice Fruit Details
-
-## streamlit.text(fruityvice_response.json())   # just writes the data to the screen        ## removed to not to display raw Json                
-
-# use the pandas package to load the jason into Dataframes 
-fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
-# Display the Dataframes
-streamlit.dataframe(fruityvice_normalized)
+## end of new Original Block1
 
 ## Don't run anything past here while we troubleshoot
 streamlit.stop()
